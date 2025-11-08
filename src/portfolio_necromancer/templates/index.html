@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ portfolio.owner_name }} - Portfolio</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-{{ theme }} color-{{ color_scheme }}">
+    <header class="site-header">
+        <div class="container">
+            <h1>{{ portfolio.owner_name }}</h1>
+            <p class="tagline">{{ portfolio.owner_title }}</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>About Me</h2>
+            <p class="bio">{{ portfolio.owner_bio }}</p>
+        </section>
+
+        <section class="categories">
+            <h2>My Work</h2>
+            <div class="category-grid">
+                {% for category, count in category_counts.items() %}
+                {% if count > 0 %}
+                <div class="category-card">
+                    <h3>{{ category }}</h3>
+                    <p class="count">{{ count }} project{{ 's' if count != 1 else '' }}</p>
+                    <a href="{{ category.lower().replace(' ', '_') }}.html" class="btn">View Projects</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="recent-projects">
+            <h2>Recent Projects</h2>
+            <div class="project-grid">
+                {% for project in portfolio.projects[:6] %}
+                <article class="project-card">
+                    {% if project.images %}
+                    <div class="project-image">
+                        <img src="{{ project.images[0] }}" alt="{{ project.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
+                    <div class="project-info">
+                        <h3>{{ project.title }}</h3>
+                        <p class="category-badge">{{ project.category }}</p>
+                        <p class="description">{{ project.ai_summary or project.description[:150] }}...</p>
+                        <a href="projects/project_{{ project.id }}.html" class="btn-small">View Details</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ year }} {{ portfolio.owner_name }}. All rights reserved.</p>
+            {% if portfolio.show_watermark and not portfolio.custom_branding %}
+            <p class="watermark">Portfolio generated with <a href="https://github.com/jmenichole/Portfolio-Necromancer">Portfolio Necromancer</a></p>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>
