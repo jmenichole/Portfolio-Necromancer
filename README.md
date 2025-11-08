@@ -4,6 +4,8 @@
 
 Portfolio Necromancer is an automated tool that scrapes your inbox, Google Drive, Docs, Figma links, Slack threads, and old screenshots to auto-build a stunning portfolio site. Perfect for freelancers and creators who are too busy actually doing great work to maintain a portfolio.
 
+**🌐 [View Landing Page](https://jmenichole.github.io/Portfolio-Necromancer/)** | **📚 [Integration Guide](INTEGRATIONS.md)** | **⚡ [Quick Start](QUICKSTART.md)**
+
 ## ✨ Features
 
 - **🔍 Multi-Source Scraping**: Automatically discovers your work from:
@@ -82,6 +84,8 @@ figma:
    - **Slack**: Create a Slack app and get a bot token
    - **Figma**: Get your personal access token from Figma settings
    - **OpenAI**: Get an API key from [OpenAI](https://platform.openai.com/api-keys)
+   
+   📖 **See [INTEGRATIONS.md](INTEGRATIONS.md) for detailed setup instructions for all integrations**
 
 ### Generate Your Portfolio
 
