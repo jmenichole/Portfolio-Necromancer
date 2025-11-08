@@ -1,0 +1,74 @@
+# Portfolio Necromancer Configuration
+
+# User Information
+user:
+  name: "Your Name"
+  email: "your.email@example.com"
+  title: "Freelancer / Developer / Designer"
+  bio: "Short bio about yourself"
+
+# AI Configuration (OpenAI API)
+ai:
+  api_key: "your-openai-api-key-here"
+  model: "gpt-3.5-turbo"
+  max_tokens: 500
+
+# Google Services
+google:
+  credentials_file: "credentials.json"
+  token_file: "token.json"
+  scopes:
+    - "https://www.googleapis.com/auth/gmail.readonly"
+    - "https://www.googleapis.com/auth/drive.readonly"
+    - "https://www.googleapis.com/auth/documents.readonly"
+
+# Slack Configuration
+slack:
+  token: "xoxb-your-slack-bot-token"
+  user_id: "your-slack-user-id"
+
+# Figma Configuration
+figma:
+  access_token: "your-figma-access-token"
+  team_id: "your-figma-team-id"
+
+# Scraping Settings
+scraping:
+  email:
+    enabled: true
+    max_messages: 100
+    date_range_days: 365
+  drive:
+    enabled: true
+    max_files: 50
+  slack:
+    enabled: true
+    max_messages: 100
+  figma:
+    enabled: true
+    max_projects: 20
+  screenshots:
+    enabled: true
+    folder_path: "./screenshots"
+
+# Categorization
+categories:
+  - "Writing"
+  - "Design"
+  - "Code"
+  - "Miscellaneous Unicorn Work"
+
+# Portfolio Settings
+portfolio:
+  output_dir: "./generated_portfolios"
+  theme: "modern"
+  color_scheme: "blue"
+  items_per_page: 12
+
+# Feature Flags (Pro vs Free)
+features:
+  custom_domain: false  # Pro feature
+  custom_branding: false  # Pro feature
+  advanced_analytics: false  # Pro feature
+  unlimited_projects: false  # Free tier limited to 20 projects
+  remove_watermark: false  # Pro feature

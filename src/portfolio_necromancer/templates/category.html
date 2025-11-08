@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category }} - {{ portfolio.owner_name }}</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-{{ theme }} color-{{ color_scheme }}">
+    <header class="site-header">
+        <div class="container">
+            <h1>{{ portfolio.owner_name }}</h1>
+            <nav>
+                <a href="index.html">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="category-header">
+            <h2>{{ category }}</h2>
+            <p>{{ projects|length }} project{{ 's' if projects|length != 1 else '' }}</p>
+        </section>
+
+        <section class="projects-list">
+            <div class="project-grid">
+                {% for project in projects %}
+                <article class="project-card">
+                    {% if project.images %}
+                    <div class="project-image">
+                        <img src="../{{ project.images[0] }}" alt="{{ project.title }}" loading="lazy">
+                    </div>
+                    {% endif %}
+                    <div class="project-info">
+                        <h3>{{ project.title }}</h3>
+                        <p class="date">{{ project.date.strftime('%B %Y') }}</p>
+                        <p class="description">{{ project.ai_summary or project.description[:200] }}...</p>
+                        <div class="project-tags">
+                            {% for tag in project.tags[:5] %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="projects/project_{{ project.id }}.html" class="btn-small">View Details</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ year }} {{ portfolio.owner_name }}. All rights reserved.</p>
+            {% if portfolio.show_watermark and not portfolio.custom_branding %}
+            <p class="watermark">Portfolio generated with <a href="https://github.com/jmenichole/Portfolio-Necromancer">Portfolio Necromancer</a></p>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.title }} - {{ portfolio.owner_name }}</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="theme-{{ theme }} color-{{ color_scheme }}">
+    <header class="site-header">
+        <div class="container">
+            <h1>{{ portfolio.owner_name }}</h1>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="../{{ project.category.lower().replace(' ', '_') }}.html">{{ project.category }}</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <article class="project-detail">
+            <header class="project-header">
+                <h2>{{ project.title }}</h2>
+                <div class="project-meta">
+                    <span class="category-badge">{{ project.category }}</span>
+                    <span class="date">{{ project.date.strftime('%B %Y') }}</span>
+                    <span class="source">Source: {{ project.source }}</span>
+                </div>
+            </header>
+
+            {% if project.images %}
+            <section class="project-gallery">
+                {% for image in project.images %}
+                <img src="{{ image if image.startswith('http') else '../' + image }}" alt="{{ project.title }}" loading="lazy">
+                {% endfor %}
+            </section>
+            {% endif %}
+
+            <section class="project-summary">
+                <h3>Summary</h3>
+                <p>{{ project.ai_summary or project.description }}</p>
+            </section>
+
+            {% if project.client %}
+            <section class="project-client">
+                <h3>Client</h3>
+                <p>{{ project.client }}</p>
+            </section>
+            {% endif %}
+
+            {% if project.tags %}
+            <section class="project-tags">
+                <h3>Tags</h3>
+                <div class="tag-list">
+                    {% for tag in project.tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if project.links %}
+            <section class="project-links">
+                <h3>Links</h3>
+                <ul>
+                    {% for link in project.links %}
+                    <li><a href="{{ link }}" target="_blank" rel="noopener noreferrer">{{ link }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ year }} {{ portfolio.owner_name }}. All rights reserved.</p>
+            {% if portfolio.show_watermark and not portfolio.custom_branding %}
+            <p class="watermark">Portfolio generated with <a href="https://github.com/jmenichole/Portfolio-Necromancer">Portfolio Necromancer</a></p>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>

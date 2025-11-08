@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+
+# Output and generated files
+output/
+generated_portfolios/
+scraped_data/
+demo_portfolio/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules (for frontend)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build artifacts
+*.whl
+*.tar.gz
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Config files with credentials
+config.yaml
+credentials.json
+token.json
