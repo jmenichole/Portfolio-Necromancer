@@ -6,19 +6,26 @@
 }
 
 :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
+    /* PortfoliGhost Theme - Goth Minimalism */
+    --bone-white: #f8f7f4;
+    --soft-black: #1a1a1a;
+    --ghost-gray: #b8b8b8;
+    --ethereal-purple: #a78bfa;
+    --muted-emerald: #6ee7b7;
+    
+    --primary-color: #a78bfa;
+    --primary-dark: #8b5cf6;
     --secondary-color: #8b5cf6;
-    --text-dark: #1f2937;
+    --text-dark: #1a1a1a;
     --text-light: #6b7280;
-    --bg-light: #f9fafb;
+    --bg-light: #f8f7f4;
     --bg-white: #ffffff;
-    --border-color: #e5e7eb;
-    --success-color: #10b981;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --border-color: #e5e5e5;
+    --success-color: #6ee7b7;
+    --shadow-sm: 0 2px 4px 0 rgba(167, 139, 250, 0.1);
+    --shadow-md: 0 4px 12px -1px rgba(167, 139, 250, 0.15);
+    --shadow-lg: 0 10px 25px -3px rgba(167, 139, 250, 0.2);
+    --shadow-xl: 0 20px 35px -5px rgba(167, 139, 250, 0.25);
 }
 
 body {
@@ -26,6 +33,15 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--bg-white);
+    /* Subtle texture for ethereal vibe */
+    background-image: radial-gradient(circle at 1px 1px, rgba(167, 139, 250, 0.03) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+h1, h2, h3 {
+    /* Serif headers with arcane feel */
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Georgia', serif;
+    letter-spacing: -0.02em;
 }
 
 .container {
@@ -34,14 +50,15 @@ body {
     padding: 0 20px;
 }
 
-/* Navigation */
+/* Navigation - Ethereal styling */
 .navbar {
-    background: var(--bg-white);
-    border-bottom: 1px solid var(--border-color);
+    background: rgba(248, 247, 244, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(167, 139, 250, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.1);
 }
 
 .navbar .container {
@@ -58,10 +75,12 @@ body {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-dark);
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Georgia', serif;
 }
 
 .logo {
     font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(167, 139, 250, 0.3));
 }
 
 .nav-links {
@@ -75,56 +94,95 @@ body {
     text-decoration: none;
     color: var(--text-light);
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--muted-emerald));
+    transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--primary-color);
+    color: var(--ethereal-purple);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
 }
 
 .btn-nav {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--secondary-color));
     color: white !important;
     padding: 0.5rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: background 0.2s;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.3);
+}
+
+.btn-nav::after {
+    display: none;
 }
 
 .btn-nav:hover {
-    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(167, 139, 250, 0.4);
 }
 
 /* Buttons */
 .btn {
     display: inline-block;
     padding: 0.75rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--secondary-color));
     color: white;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 24px rgba(167, 139, 250, 0.4);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary-color);
-    border-color: var(--primary-color);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn-secondary:hover {
-    background: var(--primary-color);
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
 }
 
 .btn-outline {
@@ -143,30 +201,51 @@ body {
     font-size: 1.125rem;
 }
 
-/* Hero Section */
+/* Hero Section - Ethereal Goth Vibes */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--soft-black) 0%, #2d2d2d 50%, #1a1a1a 100%);
     color: white;
     padding: 6rem 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.1), transparent 70%);
+    pointer-events: none;
 }
 
 .hero-content {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-title {
     font-size: 3.5rem;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.2;
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--muted-emerald));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-subtitle {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    opacity: 0.95;
+    opacity: 0.9;
+    color: var(--ghost-gray);
+    font-style: italic;
 }
 
 .hero-description {
@@ -218,9 +297,17 @@ section h2 {
 .problem-card {
     background: white;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 12px;
     text-align: center;
     box-shadow: var(--shadow-md);
+    border: 1px solid rgba(167, 139, 250, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.problem-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(167, 139, 250, 0.25);
+    border-color: var(--ethereal-purple);
 }
 
 .problem-card .emoji {
@@ -252,18 +339,26 @@ section h2 {
 .step {
     background: white;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 12px;
     box-shadow: var(--shadow-md);
     flex: 1;
     min-width: 200px;
     max-width: 300px;
     text-align: center;
+    border: 1px solid rgba(167, 139, 250, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(167, 139, 250, 0.25);
+    border-color: var(--ethereal-purple);
 }
 
 .step-number {
     width: 50px;
     height: 50px;
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--secondary-color));
     color: white;
     border-radius: 50%;
     display: flex;
@@ -272,6 +367,7 @@ section h2 {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
 }
 
 .step h3 {
@@ -286,8 +382,9 @@ section h2 {
 
 .step-arrow {
     font-size: 2rem;
-    color: var(--primary-color);
+    color: var(--ethereal-purple);
     font-weight: 700;
+    opacity: 0.5;
 }
 
 /* Features Section */
@@ -305,14 +402,16 @@ section h2 {
 .feature-card {
     background: white;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 12px;
     box-shadow: var(--shadow-md);
-    transition: transform 0.2s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(167, 139, 250, 0.1);
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(167, 139, 250, 0.25);
+    border-color: var(--ethereal-purple);
 }
 
 .feature-icon {
@@ -676,20 +775,38 @@ section h2 {
 
 /* CTA Section */
 .cta {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--soft-black) 0%, #2d2d2d 100%);
     color: white;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.15), transparent 70%);
+    pointer-events: none;
 }
 
 .cta h2 {
     color: white;
     margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--ethereal-purple), var(--muted-emerald));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .cta p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    opacity: 0.95;
+    opacity: 0.9;
+    color: var(--ghost-gray);
 }
 
 .cta-buttons {
@@ -700,9 +817,10 @@ section h2 {
 
 /* Footer */
 .footer {
-    background: var(--text-dark);
+    background: var(--soft-black);
     color: white;
     padding: 3rem 0 1rem;
+    border-top: 1px solid rgba(167, 139, 250, 0.2);
 }
 
 .footer-content {
@@ -728,20 +846,20 @@ section h2 {
 }
 
 .footer-links a {
-    color: #9ca3af;
+    color: var(--ghost-gray);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.3s;
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--ethereal-purple);
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid #374151;
-    color: #9ca3af;
+    border-top: 1px solid rgba(167, 139, 250, 0.2);
+    color: var(--ghost-gray);
 }
 
 .footer-bottom p {
