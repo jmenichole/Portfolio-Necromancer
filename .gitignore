@@ -40,6 +40,7 @@ ENV/
 output/
 generated_portfolios/
 scraped_data/
+demo_portfolio/
 
 # Logs
 *.log
@@ -56,3 +57,13 @@ yarn.lock
 # Build artifacts
 *.whl
 *.tar.gz
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Config files with credentials
+config.yaml
+credentials.json
+token.json
