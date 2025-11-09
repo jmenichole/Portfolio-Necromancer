@@ -1,4 +1,8 @@
-"""Email/Gmail scraper for extracting projects from inbox."""
+"""
+Portfolio Necromancer - Email/Gmail scraper
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import os
 import re

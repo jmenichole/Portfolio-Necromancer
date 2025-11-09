@@ -1,3 +1,9 @@
+/*
+ * Portfolio Necromancer - Landing Page Styles
+ * Copyright (c) 2025 Portfolio Necromancer Team
+ * Licensed under MIT License - see LICENSE file for details
+ */
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6,7 +12,7 @@
 }
 
 :root {
-    /* PortfoliGhost Theme - Goth Minimalism */
+    /* Portfolio Necromancer Theme - Gothic Minimalism */
     --bone-white: #f8f7f4;
     --soft-black: #1a1a1a;
     --ghost-gray: #b8b8b8;

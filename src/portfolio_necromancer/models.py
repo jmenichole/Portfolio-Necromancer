@@ -1,4 +1,8 @@
-"""Data models for Portfolio Necromancer."""
+"""
+Portfolio Necromancer - Data models
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from datetime import datetime
 from typing import List, Optional, Dict, Any

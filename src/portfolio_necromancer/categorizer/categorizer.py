@@ -1,4 +1,8 @@
-"""AI-powered project categorization system."""
+"""
+Portfolio Necromancer - AI-powered project categorization
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from typing import List, Optional
 from ..models import Project, ProjectCategory

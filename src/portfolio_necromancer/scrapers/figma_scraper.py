@@ -1,4 +1,8 @@
-"""Figma scraper for design projects."""
+"""
+Portfolio Necromancer - Figma scraper
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from typing import List, Dict, Any, Optional
 from datetime import datetime

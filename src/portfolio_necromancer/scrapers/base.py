@@ -1,4 +1,8 @@
-"""Base scraper interface."""
+"""
+Portfolio Necromancer - Base scraper interface
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any

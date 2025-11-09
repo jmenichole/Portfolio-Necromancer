@@ -1,4 +1,8 @@
-"""Test configuration module."""
+"""
+Portfolio Necromancer - Tests for configuration module
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import pytest
 import os

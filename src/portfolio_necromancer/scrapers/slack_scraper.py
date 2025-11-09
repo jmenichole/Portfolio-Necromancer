@@ -1,4 +1,8 @@
-"""Slack scraper for extracting project discussions."""
+"""
+Portfolio Necromancer - Slack scraper
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import os
 from typing import List, Dict, Any, Optional

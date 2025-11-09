@@ -1,4 +1,8 @@
-"""Portfolio website generator."""
+"""
+Portfolio Necromancer - Portfolio website generator
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import os
 import shutil

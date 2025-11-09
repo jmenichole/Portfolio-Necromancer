@@ -1,4 +1,8 @@
-"""Scrapers package."""
+"""
+Portfolio Necromancer - Scrapers package
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from .base import BaseScraper
 from .email_scraper import EmailScraper
