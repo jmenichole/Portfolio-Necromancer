@@ -1,4 +1,8 @@
-"""Google Drive scraper for finding project files."""
+"""
+Portfolio Necromancer - Google Drive scraper
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import os
 from typing import List, Dict, Any, Optional

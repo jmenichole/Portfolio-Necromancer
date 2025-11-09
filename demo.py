@@ -1,4 +1,8 @@
-"""Demo script showing Portfolio Necromancer usage with sample data."""
+"""
+Portfolio Necromancer - Demo script showing usage with sample data
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from datetime import datetime, timedelta
 import random

@@ -1,4 +1,8 @@
-"""Test categorizer module."""
+"""
+Portfolio Necromancer - Tests for categorizer module
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import pytest
 from portfolio_necromancer.models import Project, ProjectCategory, ProjectSource

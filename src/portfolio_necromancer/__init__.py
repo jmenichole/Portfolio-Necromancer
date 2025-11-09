@@ -1,4 +1,8 @@
-"""Portfolio Necromancer - Auto-generate portfolios from scattered digital work."""
+"""
+Portfolio Necromancer - Auto-generate portfolios from scattered digital work
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 __version__ = "0.1.0"
 __author__ = "Portfolio Necromancer Team"

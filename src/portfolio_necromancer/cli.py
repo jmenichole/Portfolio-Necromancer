@@ -1,4 +1,8 @@
-"""Command-line interface for Portfolio Necromancer."""
+"""
+Portfolio Necromancer - Command-line interface
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import argparse
 import sys

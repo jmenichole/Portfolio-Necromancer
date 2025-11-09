@@ -1,4 +1,8 @@
-"""Main Portfolio Necromancer orchestrator."""
+"""
+Portfolio Necromancer - Main orchestrator
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 from typing import List, Optional
 from .models import Portfolio, Project

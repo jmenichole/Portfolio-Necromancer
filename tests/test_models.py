@@ -1,4 +1,8 @@
-"""Basic tests for Portfolio Necromancer."""
+"""
+Portfolio Necromancer - Basic tests
+Copyright (c) 2025 Portfolio Necromancer Team
+Licensed under MIT License - see LICENSE file for details
+"""
 
 import pytest
 from datetime import datetime
