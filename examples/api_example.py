@@ -15,7 +15,7 @@ API_URL = "http://localhost:5000"
 def check_api_health():
     """Check if the API is running."""
     try:
-        response = requests.get(f"{API_URL}/api/health")
+        response = requests.get(f"{API_URL}/api/health", timeout=5)
         if response.status_code == 200:
             data = response.json()
             print("✓ API is healthy")
@@ -94,7 +94,8 @@ def generate_portfolio():
         response = requests.post(
             f"{API_URL}/api/generate",
             json=portfolio_data,
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
+            timeout=60  # Portfolio generation can take time
         )
         
         if response.status_code == 200:
@@ -121,7 +122,7 @@ def get_available_options():
     
     # Get categories
     try:
-        response = requests.get(f"{API_URL}/api/categories")
+        response = requests.get(f"{API_URL}/api/categories", timeout=5)
         if response.status_code == 200:
             categories = response.json()['categories']
             print(f"  Categories: {', '.join(categories)}")
@@ -130,7 +131,7 @@ def get_available_options():
     
     # Get themes
     try:
-        response = requests.get(f"{API_URL}/api/themes")
+        response = requests.get(f"{API_URL}/api/themes", timeout=5)
         if response.status_code == 200:
             data = response.json()
             print(f"  Themes: {', '.join(data['themes'])}")

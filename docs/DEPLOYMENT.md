@@ -107,12 +107,13 @@ Your data will persist across container restarts.
 pip install gunicorn
 
 # Run with 4 worker processes
-gunicorn -w 4 -b 0.0.0.0:5000 --timeout 300 'portfolio_necromancer.api.app:create_app()'
+# Note: In production, use a reverse proxy (nginx) and firewall for security
+gunicorn -w 4 -b 127.0.0.1:5000 --timeout 300 'portfolio_necromancer.api.app:create_app()'
 
 # With better configuration
 gunicorn \
   --workers 4 \
-  --bind 0.0.0.0:5000 \
+  --bind 127.0.0.1:5000 \
   --timeout 300 \
   --access-logfile - \
   --error-logfile - \
@@ -486,7 +487,7 @@ cp portfolio.db portfolio.db.backup
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/jmenichole/Portfolio-Necromancer/issues
+- GitHub Issues: https://github.com/YOUR_USERNAME/Portfolio-Necromancer/issues
 - Documentation: Check the README.md and API_GUIDE.md
 
 ---

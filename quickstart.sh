@@ -23,17 +23,23 @@ echo "Python version: $python_version"
 # Install dependencies
 echo ""
 echo -e "${BLUE}Installing dependencies...${NC}"
-pip install -q -r requirements.txt
-pip install -q -e .
+if [ ! -f requirements.txt ]; then
+    echo -e "${RED}Error: requirements.txt not found${NC}"
+    exit 1
+fi
+pip install -q --upgrade -r requirements.txt -e .
 
 echo -e "${GREEN}✓ Dependencies installed${NC}"
 
 # Run tests
 echo ""
 echo -e "${BLUE}Running tests...${NC}"
-python -m pytest tests/ -q
-
-echo -e "${GREEN}✓ All tests passed${NC}"
+if [ ! -d tests ]; then
+    echo -e "${RED}Warning: tests directory not found, skipping tests${NC}"
+else
+    python -m pytest tests/ -q
+    echo -e "${GREEN}✓ All tests passed${NC}"
+fi
 
 # Generate demo portfolio
 echo ""

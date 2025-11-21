@@ -227,7 +227,7 @@ for user in users:
 2. **Use the web dashboard**: It's the easiest way to get started
 3. **Test with sample data**: Use the API example before creating your own
 4. **Check the docs**: See `docs/API_GUIDE.md` for complete API reference
-5. **Customize themes**: Modify the CSS in `src/portfolio_necromancer/templates/assets/style.css`
+5. **Customize themes**: Edit CSS files in the templates directory to match your branding
 
 ## Troubleshooting
 
