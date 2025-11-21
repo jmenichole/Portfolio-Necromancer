@@ -4,7 +4,7 @@
 
 Portfolio Necromancer is an automated tool that scrapes your inbox, Google Drive, Docs, Figma links, Slack threads, and old screenshots to auto-build a stunning portfolio site. Perfect for freelancers and creators who are too busy actually doing great work to maintain a portfolio.
 
-**🌐 [View Landing Page](https://jmenichole.github.io/Portfolio-Necromancer/)** | **📚 [Integration Guide](INTEGRATIONS.md)** | **⚡ [Quick Start](QUICKSTART.md)**
+**🌐 [View Landing Page](https://jmenichole.github.io/Portfolio-Necromancer/)** | **📚 [Integration Guide](INTEGRATIONS.md)** | **⚡ [Quick Start](QUICKSTART.md)** | **🔌 [API Guide](docs/API_GUIDE.md)**
 
 ## ✨ Features
 
@@ -26,6 +26,12 @@ Portfolio Necromancer is an automated tool that scrapes your inbox, Google Drive
   > "In this project, [your name] skillfully wrangled a broken system to deliver [miracle]."
 
 - **🎨 Beautiful Portfolio Sites**: Generates modern, responsive static websites ready to deploy
+
+- **🌐 Fullstack Web Application**: 
+  - REST API for portfolio generation
+  - Interactive web dashboard
+  - Real-time portfolio creation
+  - Preview and download capabilities
 
 - **💎 Pro Features** (Monetization Ready):
   - Custom domains
@@ -51,6 +57,25 @@ pip install -e .
 ```
 
 ### Initial Setup
+
+#### Option 1: Web Dashboard (Recommended)
+
+1. Start the web server:
+```bash
+python -m portfolio_necromancer.api.server
+```
+
+2. Open your browser to:
+```
+http://localhost:5000
+```
+
+3. Use the interactive dashboard to:
+   - Enter your information and projects
+   - Generate portfolios instantly
+   - Preview and download results
+
+#### Option 2: Command Line Interface
 
 1. Create your configuration file:
 ```bash
@@ -88,6 +113,12 @@ figma:
    📖 **See [INTEGRATIONS.md](INTEGRATIONS.md) for detailed setup instructions for all integrations**
 
 ### Generate Your Portfolio
+
+#### Via Web Dashboard
+
+Access the dashboard at `http://localhost:5000` and follow the interactive interface.
+
+#### Via Command Line
 
 ```bash
 # Generate with default settings

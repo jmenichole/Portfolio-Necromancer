@@ -1,0 +1,63 @@
+# Docker ignore patterns
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Git
+.git/
+.gitignore
+
+# Documentation build artifacts
+docs/_build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local config and data
+config.yaml
+credentials.json
+token.json
+*.log
+
+# Generated portfolios (these should be in volumes)
+generated_portfolios/
+demo_portfolio/
+
+# Temporary files
+*.tmp
+tmp/
