@@ -3,6 +3,7 @@ Flask API Application for Portfolio Necromancer
 Provides REST API endpoints for portfolio generation and management
 """
 
+import logging
 from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_cors import CORS
 import os
@@ -17,6 +18,8 @@ from ..models import Portfolio, Project, ProjectCategory, ProjectSource
 from ..necromancer import PortfolioNecromancer
 from ..generator import PortfolioGenerator
 from ..config import Config
+
+logger = logging.getLogger(__name__)
 
 
 def create_app(config: Dict[str, Any] = None) -> Flask:
@@ -34,7 +37,16 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
     CORS(app)
     
     # Configuration
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+    # Security: SECRET_KEY must be set in production via environment variable
+    secret_key = os.environ.get('SECRET_KEY')
+    if not secret_key:
+        # Only allow default in development mode
+        if os.environ.get('FLASK_ENV') == 'development':
+            secret_key = 'dev-secret-key-for-development-only'
+        else:
+            raise ValueError("SECRET_KEY environment variable must be set in production")
+    
+    app.config['SECRET_KEY'] = secret_key
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
     
     # Storage directory for generated portfolios
@@ -110,19 +122,20 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
                     category_str = proj_data.get('category', 'code').upper()
                     category = ProjectCategory[category_str] if category_str in ProjectCategory.__members__ else ProjectCategory.CODE
                     
+                    # Fix field name mismatches: url→links, image_url→images, date_created→date
                     project = Project(
                         title=proj_data.get('title', 'Untitled Project'),
                         description=proj_data.get('description', ''),
                         category=category,
                         source=ProjectSource.MANUAL,
                         tags=proj_data.get('tags', []),
-                        url=proj_data.get('url'),
-                        image_url=proj_data.get('image_url'),
-                        date_created=datetime.now(timezone.utc)
+                        links=[proj_data['url']] if proj_data.get('url') else [],
+                        images=[proj_data['image_url']] if proj_data.get('image_url') else [],
+                        date=datetime.now(timezone.utc)
                     )
                     projects.append(project)
                 except Exception as e:
-                    print(f"Error creating project: {e}")
+                    logger.warning(f"Error creating project: {e}", exc_info=True)
                     continue
             
             if not projects:
@@ -157,7 +170,7 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
             })
             
         except Exception as e:
-            print(f"Error generating portfolio: {e}")
+            logger.error(f"Error generating portfolio: {e}", exc_info=True)
             return jsonify({'error': str(e)}), 500
     
     @app.route('/api/generate/auto', methods=['POST'])
@@ -217,7 +230,7 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
                     os.remove(config_file)
                     
         except Exception as e:
-            print(f"Error in auto-generation: {e}")
+            logger.error(f"Error in auto-generation: {e}", exc_info=True)
             return jsonify({'error': str(e)}), 500
     
     @app.route('/api/preview/<portfolio_id>', methods=['GET'])

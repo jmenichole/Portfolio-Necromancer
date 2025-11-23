@@ -4,8 +4,11 @@ Copyright (c) 2025 Portfolio Necromancer Team
 Licensed under MIT License - see LICENSE file for details
 """
 
+import logging
 from typing import List, Optional
 from ..models import Project, ProjectCategory
+
+logger = logging.getLogger(__name__)
 
 
 class ProjectCategorizer:
@@ -106,7 +109,7 @@ Respond with ONLY the category name, nothing else."""
                 return ProjectCategory.MISCELLANEOUS
             
         except Exception as e:
-            print(f"AI categorization failed: {e}")
+            logger.warning(f"AI categorization failed: {e}")
         
         return None
     
