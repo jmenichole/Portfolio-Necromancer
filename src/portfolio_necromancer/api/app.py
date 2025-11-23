@@ -66,12 +66,19 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
     # Enable CORS for all routes
     CORS(app)
     
+    def is_dev_or_test_environment() -> bool:
+        """Check if running in development or testing mode."""
+        return (
+            os.environ.get('FLASK_ENV') == 'development' or
+            (config and config.get('TESTING'))
+        )
+    
     # Configuration
     # Security: SECRET_KEY must be set in production via environment variable
     secret_key = os.environ.get('SECRET_KEY')
     if not secret_key:
         # Only allow default in development or testing mode
-        if os.environ.get('FLASK_ENV') == 'development' or (config and config.get('TESTING')):
+        if is_dev_or_test_environment():
             secret_key = 'dev-secret-key-for-development-only'
         else:
             raise ValueError("SECRET_KEY environment variable must be set in production")

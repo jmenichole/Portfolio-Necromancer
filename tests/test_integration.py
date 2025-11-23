@@ -58,7 +58,8 @@ class TestIntegration:
     
     def test_categorizer_caching(self):
         """Test that categorizer caches results."""
-        config = {'api_key': ''}  # No AI, use rule-based
+        # Use rule-based categorization (no AI)
+        config = {'api_key': None}
         categorizer = ProjectCategorizer(config)
         
         # Create identical projects
@@ -96,7 +97,8 @@ class TestIntegration:
     
     def test_categorizer_batch_processing(self):
         """Test batch categorization."""
-        config = {'api_key': ''}
+        # Use rule-based categorization (no AI)
+        config = {'api_key': None}
         categorizer = ProjectCategorizer(config)
         
         projects = [

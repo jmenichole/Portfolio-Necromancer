@@ -37,6 +37,12 @@ class ProjectCategorizer:
             
         Returns:
             Cache key string
+            
+        Note:
+            Uses MD5 hash for non-security cache key generation.
+            MD5 is acceptable here as it's only used for cache lookup,
+            not for security purposes. It provides good distribution
+            and collision resistance for this use case.
         """
         # Create hash from title, description, and tags
         content = f"{project.title}|{project.description}|{','.join(sorted(project.tags))}"
