@@ -5,7 +5,8 @@ Licensed under MIT License - see LICENSE file for details
 """
 
 import logging
-from typing import List, Optional
+import hashlib
+from typing import List, Optional, Dict
 from ..models import Project, ProjectCategory
 
 logger = logging.getLogger(__name__)
@@ -24,6 +25,22 @@ class ProjectCategorizer:
         self.api_key = config.get('api_key', '')
         self.model = config.get('model', 'gpt-3.5-turbo')
         self.use_ai = bool(self.api_key)
+        
+        # Simple in-memory cache for categorization results
+        self._cache: Dict[str, ProjectCategory] = {}
+    
+    def _get_cache_key(self, project: Project) -> str:
+        """Generate cache key for a project.
+        
+        Args:
+            project: Project to generate key for
+            
+        Returns:
+            Cache key string
+        """
+        # Create hash from title, description, and tags
+        content = f"{project.title}|{project.description}|{','.join(sorted(project.tags))}"
+        return hashlib.md5(content.encode()).hexdigest()
     
     def categorize(self, project: Project) -> ProjectCategory:
         """Categorize a project.
@@ -38,14 +55,23 @@ class ProjectCategorizer:
         if project.confidence_score > 0.7:
             return project.category
         
+        # Check cache first
+        cache_key = self._get_cache_key(project)
+        if cache_key in self._cache:
+            logger.debug(f"Cache hit for project: {project.title}")
+            return self._cache[cache_key]
+        
         # Try AI categorization if available
         if self.use_ai:
             category = self._categorize_with_ai(project)
             if category:
+                self._cache[cache_key] = category
                 return category
         
         # Fall back to rule-based categorization
-        return self._categorize_with_rules(project)
+        category = self._categorize_with_rules(project)
+        self._cache[cache_key] = category
+        return category
     
     def categorize_batch(self, projects: List[Project]) -> List[Project]:
         """Categorize a list of projects.
