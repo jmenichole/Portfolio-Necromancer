@@ -40,8 +40,8 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
     # Security: SECRET_KEY must be set in production via environment variable
     secret_key = os.environ.get('SECRET_KEY')
     if not secret_key:
-        # Only allow default in development mode
-        if os.environ.get('FLASK_ENV') == 'development':
+        # Only allow default in development or testing mode
+        if os.environ.get('FLASK_ENV') == 'development' or (config and config.get('TESTING')):
             secret_key = 'dev-secret-key-for-development-only'
         else:
             raise ValueError("SECRET_KEY environment variable must be set in production")
