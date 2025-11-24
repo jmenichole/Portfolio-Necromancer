@@ -6,9 +6,11 @@ Licensed under MIT License - see LICENSE file for details
 
 import argparse
 import sys
+import os
 from pathlib import Path
 from .necromancer import PortfolioNecromancer
 from .config import Config
+from .logging_config import setup_logging
 
 
 def main():
@@ -58,7 +60,18 @@ For more information, visit: https://github.com/jmenichole/Portfolio-Necromancer
         version='Portfolio Necromancer 0.1.0'
     )
     
+    parser.add_argument(
+        '--log-level',
+        type=str,
+        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        default='INFO',
+        help='Set logging level (default: INFO)'
+    )
+    
     args = parser.parse_args()
+    
+    # Setup logging
+    setup_logging(level=args.log_level)
     
     # Handle --init flag
     if args.init:

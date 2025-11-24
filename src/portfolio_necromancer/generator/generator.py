@@ -5,6 +5,7 @@ Licensed under MIT License - see LICENSE file for details
 """
 
 import os
+import logging
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -12,6 +13,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from datetime import datetime
 
 from ..models import Portfolio, ProjectCategory
+
+logger = logging.getLogger(__name__)
 
 
 class PortfolioGenerator:
@@ -60,7 +63,7 @@ class PortfolioGenerator:
         self._generate_project_pages(portfolio, output_path)
         self._copy_assets(output_path)
         
-        print(f"✓ Portfolio generated at: {output_path}")
+        logger.info(f"✓ Portfolio generated at: {output_path}")
         
         return str(output_path)
     

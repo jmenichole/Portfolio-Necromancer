@@ -4,6 +4,7 @@ Copyright (c) 2025 Portfolio Necromancer Team
 Licensed under MIT License - see LICENSE file for details
 """
 
+import logging
 from typing import List, Optional
 from .models import Portfolio, Project
 from .config import Config
@@ -14,6 +15,8 @@ from .scrapers.figma_scraper import FigmaScraper
 from .scrapers.screenshot_scraper import ScreenshotScraper
 from .categorizer import ProjectCategorizer, ProjectSummarizer
 from .generator import PortfolioGenerator
+
+logger = logging.getLogger(__name__)
 
 
 class PortfolioNecromancer:
@@ -76,30 +79,26 @@ class PortfolioNecromancer:
         Returns:
             Path to generated portfolio
         """
-        print("🧟 Portfolio Necromancer: Resurrecting your portfolio from digital wreckage...")
-        print()
+        logger.info("🧟 Portfolio Necromancer: Resurrecting your portfolio from digital wreckage...")
         
         # Step 1: Scrape all sources
-        print("📥 Scraping data from all sources...")
+        logger.info("📥 Scraping data from all sources...")
         projects = self._scrape_all()
-        print(f"✓ Found {len(projects)} potential projects")
-        print()
+        logger.info(f"✓ Found {len(projects)} potential projects")
         
         if not projects:
-            print("❌ No projects found. Please check your configuration and data sources.")
+            logger.error("❌ No projects found. Please check your configuration and data sources.")
             return ""
         
         # Step 2: Categorize projects
-        print("🏷️  Categorizing projects...")
+        logger.info("🏷️  Categorizing projects...")
         projects = self.categorizer.categorize_batch(projects)
-        print("✓ Projects categorized")
-        print()
+        logger.info("✓ Projects categorized")
         
         # Step 3: Generate AI summaries
-        print("✨ Generating AI-powered summaries...")
+        logger.info("✨ Generating AI-powered summaries...")
         projects = self.summarizer.generate_summaries_batch(projects)
-        print("✓ Summaries generated")
-        print()
+        logger.info("✓ Summaries generated")
         
         # Step 4: Create portfolio object
         portfolio = Portfolio(
@@ -120,9 +119,8 @@ class PortfolioNecromancer:
             portfolio.projects = portfolio.projects[:20]  # Free tier: max 20 projects
         
         # Step 5: Generate portfolio website
-        print("🎨 Generating portfolio website...")
+        logger.info("🎨 Generating portfolio website...")
         output_path = self.generator.generate(portfolio, output_name)
-        print()
         
         # Print summary
         self._print_summary(portfolio, output_path)
@@ -141,17 +139,17 @@ class PortfolioNecromancer:
             scraper_name = scraper.__class__.__name__
             
             if not scraper.can_scrape():
-                print(f"  ⊘ {scraper_name}: Skipped (not configured or disabled)")
+                logger.debug(f"⊘ {scraper_name}: Skipped (not configured or disabled)")
                 continue
             
-            print(f"  → {scraper_name}: Scraping...")
+            logger.info(f"→ {scraper_name}: Scraping...")
             
             try:
                 projects = scraper.scrape()
                 all_projects.extend(projects)
-                print(f"    ✓ Found {len(projects)} projects")
+                logger.info(f"  ✓ Found {len(projects)} projects")
             except Exception as e:
-                print(f"    ✗ Error: {e}")
+                logger.error(f"  ✗ Error in {scraper_name}: {e}", exc_info=True)
         
         return all_projects
     

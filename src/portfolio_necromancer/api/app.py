@@ -3,20 +3,53 @@ Flask API Application for Portfolio Necromancer
 Provides REST API endpoints for portfolio generation and management
 """
 
+import logging
 from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_cors import CORS
 import os
 import json
 import uuid
 from datetime import datetime, timezone
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
 import tempfile
 import shutil
+from pydantic import BaseModel, Field, ValidationError as PydanticValidationError
 
 from ..models import Portfolio, Project, ProjectCategory, ProjectSource
 from ..necromancer import PortfolioNecromancer
 from ..generator import PortfolioGenerator
 from ..config import Config
+from ..exceptions import ValidationError
+
+logger = logging.getLogger(__name__)
+
+
+# Pydantic models for API request validation
+class OwnerInfo(BaseModel):
+    """Owner information for portfolio generation."""
+    name: str = Field(..., min_length=1, max_length=100)
+    email: str = Field(..., min_length=3, max_length=100)
+    title: str = Field(default="Developer", max_length=100)
+    bio: str = Field(default="", max_length=500)
+
+
+class ProjectRequest(BaseModel):
+    """Project information for API requests."""
+    title: str = Field(..., min_length=1, max_length=200)
+    description: str = Field(default="", max_length=1000)
+    category: str = Field(default="code", max_length=50)
+    tags: List[str] = Field(default_factory=list)
+    url: Optional[str] = Field(default=None, max_length=500)
+    image_url: Optional[str] = Field(default=None, max_length=500)
+
+
+class GeneratePortfolioRequest(BaseModel):
+    """Request model for portfolio generation."""
+    owner: OwnerInfo
+    projects: List[ProjectRequest] = Field(..., min_length=1, max_length=100)
+    theme: str = Field(default="modern", max_length=50)
+    color_scheme: str = Field(default="blue", max_length=50)
+    show_watermark: bool = Field(default=True)
 
 
 def create_app(config: Dict[str, Any] = None) -> Flask:
@@ -33,8 +66,24 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
     # Enable CORS for all routes
     CORS(app)
     
+    def is_dev_or_test_environment() -> bool:
+        """Check if running in development or testing mode."""
+        return (
+            os.environ.get('FLASK_ENV') == 'development' or
+            (config and config.get('TESTING'))
+        )
+    
     # Configuration
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+    # Security: SECRET_KEY must be set in production via environment variable
+    secret_key = os.environ.get('SECRET_KEY')
+    if not secret_key:
+        # Only allow default in development or testing mode
+        if is_dev_or_test_environment():
+            secret_key = 'dev-secret-key-for-development-only'
+        else:
+            raise ValueError("SECRET_KEY environment variable must be set in production")
+    
+    app.config['SECRET_KEY'] = secret_key
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
     
     # Storage directory for generated portfolios
@@ -95,34 +144,37 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
             if not data:
                 return jsonify({'error': 'No data provided'}), 400
             
-            # Validate required fields
-            if 'owner' not in data or 'projects' not in data:
-                return jsonify({'error': 'Missing required fields: owner and projects'}), 400
-            
-            owner = data['owner']
-            if not all(k in owner for k in ['name', 'email']):
-                return jsonify({'error': 'Owner must have name and email'}), 400
+            # Validate request with Pydantic
+            try:
+                request_data = GeneratePortfolioRequest(**data)
+            except PydanticValidationError as e:
+                logger.warning(f"Validation error: {e}")
+                return jsonify({
+                    'error': 'Invalid request data',
+                    'details': e.errors()
+                }), 400
             
             # Convert projects to Project objects
             projects = []
-            for proj_data in data['projects']:
+            for proj_data in request_data.projects:
                 try:
-                    category_str = proj_data.get('category', 'code').upper()
+                    category_str = proj_data.category.upper()
                     category = ProjectCategory[category_str] if category_str in ProjectCategory.__members__ else ProjectCategory.CODE
                     
+                    # Fix field name mismatches: url→links, image_url→images, date_created→date
                     project = Project(
-                        title=proj_data.get('title', 'Untitled Project'),
-                        description=proj_data.get('description', ''),
+                        title=proj_data.title,
+                        description=proj_data.description,
                         category=category,
                         source=ProjectSource.MANUAL,
-                        tags=proj_data.get('tags', []),
-                        url=proj_data.get('url'),
-                        image_url=proj_data.get('image_url'),
-                        date_created=datetime.now(timezone.utc)
+                        tags=proj_data.tags,
+                        links=[proj_data.url] if proj_data.url else [],
+                        images=[proj_data.image_url] if proj_data.image_url else [],
+                        date=datetime.now(timezone.utc)
                     )
                     projects.append(project)
                 except Exception as e:
-                    print(f"Error creating project: {e}")
+                    logger.warning(f"Error creating project: {e}", exc_info=True)
                     continue
             
             if not projects:
@@ -130,14 +182,14 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
             
             # Create portfolio
             portfolio = Portfolio(
-                owner_name=owner.get('name'),
-                owner_email=owner.get('email'),
-                owner_title=owner.get('title', 'Developer'),
-                owner_bio=owner.get('bio', ''),
+                owner_name=request_data.owner.name,
+                owner_email=request_data.owner.email,
+                owner_title=request_data.owner.title,
+                owner_bio=request_data.owner.bio,
                 projects=projects,
-                theme=data.get('theme', 'modern'),
-                color_scheme=data.get('color_scheme', 'blue'),
-                show_watermark=data.get('show_watermark', True)
+                theme=request_data.theme,
+                color_scheme=request_data.color_scheme,
+                show_watermark=request_data.show_watermark
             )
             
             # Generate portfolio
@@ -157,7 +209,7 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
             })
             
         except Exception as e:
-            print(f"Error generating portfolio: {e}")
+            logger.error(f"Error generating portfolio: {e}", exc_info=True)
             return jsonify({'error': str(e)}), 500
     
     @app.route('/api/generate/auto', methods=['POST'])
@@ -217,7 +269,7 @@ def create_app(config: Dict[str, Any] = None) -> Flask:
                     os.remove(config_file)
                     
         except Exception as e:
-            print(f"Error in auto-generation: {e}")
+            logger.error(f"Error in auto-generation: {e}", exc_info=True)
             return jsonify({'error': str(e)}), 500
     
     @app.route('/api/preview/<portfolio_id>', methods=['GET'])

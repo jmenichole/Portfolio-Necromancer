@@ -4,8 +4,11 @@ Copyright (c) 2025 Portfolio Necromancer Team
 Licensed under MIT License - see LICENSE file for details
 """
 
+import logging
 from typing import List, Optional
 from ..models import Project
+
+logger = logging.getLogger(__name__)
 
 
 class ProjectSummarizer:
@@ -107,7 +110,7 @@ Write ONE compelling paragraph (2-3 sentences) that makes this project sound imp
             return summary
             
         except Exception as e:
-            print(f"AI summary generation failed: {e}")
+            logger.warning(f"AI summary generation failed: {e}")
         
         return None
     
