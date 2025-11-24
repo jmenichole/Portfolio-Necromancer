@@ -33,12 +33,14 @@ This guide will help you enable GitHub Pages for the Portfolio Necromancer proje
 
 - GitHub will automatically build and deploy your site
 - This usually takes 1-3 minutes
-- You'll see a message: "Your site is live at `https://jmenichole.github.io/Portfolio-Necromancer/`"
+- You'll see a message: "Your site is live at `https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/`"
 
 ### Step 3: Access Your Landing Page
 
 Once deployed, your landing page will be available at:
-- **URL**: https://jmenichole.github.io/Portfolio-Necromancer/
+- **URL**: https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
+
+For this repository: https://jmenichole.github.io/Portfolio-Necromancer/
 
 ## What Was Created
 
@@ -94,8 +96,12 @@ git push origin main
 
 ### Step 4: Access Your Demo Portfolio
 
-- **Option A** (if you replaced landing page): https://jmenichole.github.io/Portfolio-Necromancer/
-- **Option B** (if you used subdirectory): https://jmenichole.github.io/Portfolio-Necromancer/demo/
+- **Option A** (if you replaced landing page): https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
+- **Option B** (if you used subdirectory): https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/demo/
+
+For this repository specifically:
+- https://jmenichole.github.io/Portfolio-Necromancer/
+- https://jmenichole.github.io/Portfolio-Necromancer/demo/
 
 ### Important Notes
 
