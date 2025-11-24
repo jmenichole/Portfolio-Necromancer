@@ -133,6 +133,17 @@ portfolio-necromancer --output awesome-portfolio
 
 The generated portfolio will be in `./generated_portfolios/` by default.
 
+### Deploy Your Portfolio
+
+Once generated, deploy your portfolio to the web:
+
+- **GitHub Pages**: See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md) for deploying to GitHub Pages (free!)
+- **Netlify**: Drag and drop your portfolio folder to [Netlify](https://netlify.com)
+- **Vercel**: Use [Vercel CLI](https://vercel.com/docs/cli) or web interface
+- **Any static host**: Upload the generated HTML/CSS files to any web server
+
+**Note:** demo.py generates portfolios locally. The output (HTML/CSS files) can be deployed anywhere, but Python is only needed to generate the files, not to host them.
+
 ## 📖 Usage
 
 ### Basic Usage

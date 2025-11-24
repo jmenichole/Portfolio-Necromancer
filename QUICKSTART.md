@@ -28,6 +28,8 @@ python demo.py
 
 This will generate a sample portfolio with 10 projects in `demo_portfolio/demo/`. Open `demo_portfolio/demo/index.html` in your browser to see the result!
 
+**Want to deploy this demo portfolio online?** See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md#deploying-demo-portfolio-output) for instructions on deploying to GitHub Pages.
+
 ## Setup for Your Portfolio
 
 ### 1. Create Configuration
